@@ -7,25 +7,32 @@ using System.Threading.Tasks;
 
 namespace SolunarFishing
 {
-    public static class LongitudeLatitudeProcessor
+    public static class ApiDataProcessor<T>
     {
-        public static async Task<LongitudeLatitudeFromZipCodeModel> LoadLongitudeLatitude(string zipCode = "")
+        public static async Task<T> LoadApiData(string url = "")
         {
-            string url = "https://www.zipcodeapi.com/rest/vA74qRCnakSGxJjOWfz8Rjarf9P429dXeWf0s137ye7dMdlvg7QOK7K62hSPLMVs/info.json/40047/degrees";
+            
 
             using (HttpResponseMessage response = await ApiConnector.ApiClient.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    LongitudeLatitudeFromZipCodeModel longLat = await response.Content.ReadAsAsync<LongitudeLatitudeFromZipCodeModel>();
+                    T longLat = await response.Content.ReadAsAsync<T>();
                     
                     return longLat;
                 }
                 else
                 {
-                    throw new Exception("not working");
+                    throw new Exception(response.ReasonPhrase);
                 }
             }
+        }
+
+        private static readonly List<T> _data = new(); 
+
+        public static void Add(T data)
+        {
+            _data.Add(data);
         }
     }
 }
