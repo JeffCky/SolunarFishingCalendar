@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SolunarFishing
 {
-    public class LongitudeLatitudeFromZipCodeModel
+    public class ZipCodeToLongitudeLatitudeModel
     {
         public float Lat { get; set; }
         public float Lng { get; set; }

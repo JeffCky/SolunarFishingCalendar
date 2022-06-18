@@ -13,8 +13,11 @@ namespace SolunarFishing
         {
             ApiConnector.InitializeClient();
             await LoadLongLat();
-            await LoadSolunarData();
             
+            await LoadSolunarData();
+
+            Environment.Exit(0);
+
 
         }
 
@@ -22,7 +25,7 @@ namespace SolunarFishing
         {
 
             string url = $"https://www.zipcodeapi.com/rest/vA74qRCnakSGxJjOWfz8Rjarf9P429dXeWf0s137ye7dMdlvg7QOK7K62hSPLMVs/info.json/{zipCode}/degrees";
-            var longlat = await ApiDataProcessor<LongitudeLatitudeFromZipCodeModel>.LoadApiData(url);
+            var longlat = await ApiDataProcessor<ZipCodeToLongitudeLatitudeModel>.LoadApiData(url);
             Console.WriteLine(longlat.Lng + " " + longlat.Lat);
         }
 
@@ -30,8 +33,8 @@ namespace SolunarFishing
         {
 
             string url = $"https://api.solunar.org/solunar/{longitude},{latitude},{date},{timeZone}";
-            var solunar = await ApiDataProcessor<DailySolunarEvents>.LoadApiData(url);
-            Console.WriteLine($"Sunrise is at: {solunar.sunRise} and sunset is at: {solunar.sunSet}.");
+            var solunar = await ApiDataProcessor<DailySolunarModel>.LoadApiData(url);
+            Console.WriteLine($"Sunrise is at: {solunar.SunRise} and sunset is at: {solunar.SunSet}.");
         }
     }
 
