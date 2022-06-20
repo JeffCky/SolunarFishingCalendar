@@ -14,11 +14,11 @@ namespace SolunarFishing
         {
             ApiConnector.InitializeClient();
             await LoadLongLat();
-            
+
             //await LoadSolunarData();
 
             //Environment.Exit(0);
-           
+            await SolunarForecast.Forecast(7);
             
 
 
