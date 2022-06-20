@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SolunarFishing
@@ -17,9 +15,9 @@ namespace SolunarFishing
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    T longLat = await response.Content.ReadAsAsync<T>();
+                    T result = await response.Content.ReadAsAsync<T>();
                     
-                    return longLat;
+                    return result;
                 }
                 else
                 {

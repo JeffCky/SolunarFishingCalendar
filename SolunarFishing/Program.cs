@@ -3,6 +3,7 @@
 
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SolunarFishing
@@ -14,9 +15,13 @@ namespace SolunarFishing
             ApiConnector.InitializeClient();
             await LoadLongLat();
             
-            await LoadSolunarData();
+            //await LoadSolunarData();
 
-            Environment.Exit(0);
+            //Environment.Exit(0);
+           
+            
+
+
 
 
         }
@@ -29,13 +34,7 @@ namespace SolunarFishing
             Console.WriteLine(longlat.Lng + " " + longlat.Lat);
         }
 
-        private static async Task LoadSolunarData(float longitude = 38.042253f, float latitude = -85.5406209f, string date = "20220616", int timeZone = -4)
-        {
-
-            string url = $"https://api.solunar.org/solunar/{longitude},{latitude},{date},{timeZone}";
-            var solunar = await ApiDataProcessor<DailySolunarModel>.LoadApiData(url);
-            Console.WriteLine($"Sunrise is at: {solunar.SunRise} and sunset is at: {solunar.SunSet}.");
-        }
+        
     }
 
     

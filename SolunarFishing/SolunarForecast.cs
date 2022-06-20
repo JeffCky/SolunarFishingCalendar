@@ -1,6 +1,9 @@
-﻿using System;
+﻿using SolunarFishing;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-public class DailySolunarModel
+public class SolunarForecast
 {
     public DateTime Date { get; set; }
     public string SunRise { get; set; }
@@ -65,5 +68,35 @@ public class DailySolunarModel
         public int _21 { get; set; }
         public int _22 { get; set; }
         public int _23 { get; set; }
+    }
+
+    private static async Task<SolunarForecast> LoadSolunarData(float longitude = 38.042253f, float latitude = -85.5406209f, string date = "20220616", int timeZone = -4)
+    {
+
+        string url = $"https://api.solunar.org/solunar/{longitude},{latitude},{date},{timeZone}";
+        var solunar = await ApiDataProcessor<SolunarForecast>.LoadApiData(url);
+        DateTime correctDate = Convert.ToDateTime("06/16/2022");
+        solunar.Date = correctDate;
+        //Console.WriteLine($"Sunrise is at: {solunar.SunRise} and sunset is at: {solunar.SunSet}. Date: {solunar.Date}");
+        return solunar;
+    }
+
+    public static async Task<List<SolunarForecast>> Forecast(int numberOfDays)
+    {
+        List<SolunarForecast> forecast = new List<SolunarForecast>();
+        DateTime startDate = DateTime.Now;
+        DateTime endDate = DateTime.Now;
+        for (int i = 0; i < 7; i++)
+        {
+            var line = await LoadSolunarData();
+            //Console.WriteLine($"New Date is: {endDate.AddDays(i).Date.ToString("d")}");
+            forecast.Add(new SolunarForecast() { Date = endDate.AddDays(i).Date, SunRise = line.SunRise, SunSet = line.SunSet });
+        }
+
+        foreach (var item in forecast)
+        {
+            Console.WriteLine(item.Date + " " + item.SunRise + " " + item.SunSet);
+        }
+        return forecast;
     }
 }
