@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static SolunarFishing.UserInterface;
 
 namespace SolunarFishing
 {
@@ -13,7 +14,10 @@ namespace SolunarFishing
         static async Task Main(string[] args)
         {
             ApiConnector.InitializeClient();
-            await LoadLongLat();
+            UserInterface.AskAndRetrieveUserInput();
+            
+            //await LoadLongLat();
+
 
             //await LoadSolunarData();
 
