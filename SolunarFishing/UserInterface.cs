@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolunarFishing
 {
@@ -34,13 +30,8 @@ namespace SolunarFishing
 
             }
             while (!VerifyDate(Date));
-                
-               
             
             Console.WriteLine("Thank you.");
-            
-            
-            
             Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine("Now please enter the 5 digit zip code of your fishing destination. This");
             Console.WriteLine("zip code just needs to be near the water where you will be fishing.");
