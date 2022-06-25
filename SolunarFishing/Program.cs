@@ -27,17 +27,9 @@ namespace SolunarFishing
             //Environment.Exit(0);
             await SolunarForecast.Forecast(int.Parse(UserInterface.ForecastType));
 
-            
-            
-            
-
-
-            
         }
 
-        private static void LoadLongLat(string zipCode = "40047")
-        {
-        }
+       
 
                 
             
