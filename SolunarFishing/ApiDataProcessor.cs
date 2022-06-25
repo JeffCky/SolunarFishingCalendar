@@ -26,11 +26,6 @@ namespace SolunarFishing
             }
         }
 
-        //private static readonly List<T> _data = new(); 
-
-        //public static void Add(T data)
-        //{
-        //    _data.Add(data);
-        //}
+        
     }
 }

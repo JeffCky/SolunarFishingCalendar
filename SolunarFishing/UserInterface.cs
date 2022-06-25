@@ -20,7 +20,7 @@ namespace SolunarFishing
             Console.WriteLine("Please enter the starting date for your forecast in mm/dd/yyyy format.");
             Date = Console.ReadLine();
             int i = 3;
-            do
+            while (!VerifyDate(Date)) 
             {
                 Console.WriteLine($"Wrong input, ({i-1}) more chances to enter the starting date for your forecast in mm/dd/yyyy format.");
                 Date = Console.ReadLine();
@@ -29,7 +29,7 @@ namespace SolunarFishing
                 else continue;
 
             }
-            while (!VerifyDate(Date));
+            
             
             Console.WriteLine("Thank you.");
             Console.WriteLine("-------------------------------------------------------------------------");
@@ -50,7 +50,7 @@ namespace SolunarFishing
          }
         private static bool VerifyDate(string date)
         {
-            return false;
+            return true;
         }
 
         private static bool VerifyZip(string zipcode)
