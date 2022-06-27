@@ -19,12 +19,7 @@ namespace SolunarFishing
             ApiConnector.InitializeClient();
             UserInterface.AskAndRetrieveUserInput();
 
-            //await LoadLongLat();
-
-
-            //await LoadSolunarData();
-
-            //Environment.Exit(0);
+            
             await SolunarForecast.Forecast(int.Parse(UserInterface.ForecastType));
 
         }

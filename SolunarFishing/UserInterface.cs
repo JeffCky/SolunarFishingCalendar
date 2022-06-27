@@ -1,6 +1,7 @@
-﻿using System;
-
-
+﻿using SolunarFishing.Enums;
+using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace SolunarFishing
 {
@@ -10,14 +11,7 @@ namespace SolunarFishing
         public static string Date { get; set; }
         public static string ForecastType { get; set; }
 
-        public enum InputType
-        {
-            DateInput,
-            ZipcodeInput,
-            ForecastTypeInput
-
-
-        }
+        
 
         public static string inputValue;
 
@@ -66,10 +60,10 @@ namespace SolunarFishing
             
             switch ((int)inputType) 
             {
-                case 0:
-                    if (input == "06/25/2022") 
+                case 1:
+                    if (validateDate(input)) 
                     {
-                        inputValue = input; 
+                        inputValue = input;
                         return true;
                     }
                     else
@@ -77,7 +71,7 @@ namespace SolunarFishing
                         output = "Wrong date input, Please enter the starting date for your forecast in mm/dd/yyyy format, or q to quit.";
                         return false;
                     }
-               case 1:
+               case 2:
                     if (input == "40047")
                     {
                         inputValue = input; 
@@ -88,7 +82,7 @@ namespace SolunarFishing
                         output = "Wrong zipcode input, Wrong Please enter the 5 digit zip code of your fishing destination, or q to quit.";
                         return false;
                     }
-               case 2:
+               case 3:
                     if (input == "1" || input == "7" || input == "30")
                     {
                         inputValue = input;
@@ -112,6 +106,33 @@ namespace SolunarFishing
                 input = Console.ReadLine();
             }
         }
+
+        private static bool validateDate(string testdate)
+        {
+            Regex regex = new Regex(@"/ ^(0[1 - 9] | 1[012])[- /.](0[1 - 9] |[12][0 - 9] | 3[01])[- /.](19 | 20)\d\d +$/");
+            
+            //Verify whether date entered in mm/dd/yyyy format.
+            bool isValid = regex.IsMatch(testdate);
+
+            //Verify whether entered date is Valid date.
+            DateTime dt;
+            isValid = DateTime.TryParseExact(testdate, "MM/dd/yyyy", new CultureInfo("en-GB"), DateTimeStyles.None, out dt);
+
+            return isValid;
+
+        }
+
+        private static bool validateZip(string testzip)
+        {
+            Regex regex = new Regex(@"^[0 - 9]{ 5 }(?:-[0 - 9]{ 4})?$");
+
+            //Verify whether zip is 5 digits
+            return regex.IsMatch(testzip);
+
+                      
+
+        }
+       
 
     }
 }

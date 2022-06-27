@@ -22,10 +22,11 @@ namespace SolunarFishing
             List<SolunarForecastModel> forecast = new List<SolunarForecastModel>();
             //DateTime startDate = DateTime.Parse("02/28/2022");
             DateTime endDate = DateTime.Parse(UserInterface.Date);
+            string apiDate = endDate.ToString("yyyyMMdd");
             GetLongitudeLatitude.ReturnLongitudeLatitude(UserInterface.ZipCode);
             for (int i = 0; i < numberOfDays; i++)
             {
-                var line = await LoadSolunarData(GetLongitudeLatitude.Latitude, GetLongitudeLatitude.Longitude);
+                var line = await LoadSolunarData(GetLongitudeLatitude.Latitude, GetLongitudeLatitude.Longitude, apiDate);
                 //Console.WriteLine($"New Date is: {endDate.AddDays(i).Date.ToString("d")}");
                 forecast.Add(new SolunarForecastModel()
                 {
@@ -33,13 +34,18 @@ namespace SolunarFishing
                     SunRise = line.SunRise,
                     SunSet = line.SunSet,
                     DayRating = line.DayRating
+
+
                 });
+                apiDate = endDate.AddDays(i).Date.ToString("yyyyMMdd");
+
             }
 
             foreach (var item in forecast)
             {
                 Console.WriteLine($"Today's date is {item.Date.ToString("d")} and sunrise is at {item.SunRise}, sunset is at {item.SunSet}.");
-                Console.WriteLine($"Today's fishing quality is {item.DayRating}.");
+                Console.WriteLine($"Today's fishing quality is {item.DayRating} out of 5.");
+
             }
             return forecast;
         }
