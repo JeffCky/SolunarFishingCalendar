@@ -72,10 +72,18 @@ namespace SolunarFishing
                         return false;
                     }
                case 2:
-                    if (input == "40047")
+                    if (validateZip(input))
                     {
-                        inputValue = input; 
-                        return true;
+                        inputValue = input;
+                        if (GetLongitudeLatitude.SetLongitudeLatitude(input))
+                            return true;
+                        else
+                        {
+                            output = "This zip code not found, enter another to retry or q to quit.";
+                            return false;
+                        }
+
+                        
                     }
                     else
                     {
@@ -123,14 +131,10 @@ namespace SolunarFishing
         }
 
         private static bool validateZip(string testzip)
+
         {
-            Regex regex = new Regex(@"^[0 - 9]{ 5 }(?:-[0 - 9]{ 4})?$");
-
-            //Verify whether zip is 5 digits
-            return regex.IsMatch(testzip);
-
-                      
-
+            Regex validateZipRegex = new Regex(@"^[0-9]{5}$");
+            return validateZipRegex.IsMatch(testzip); 
         }
        
 

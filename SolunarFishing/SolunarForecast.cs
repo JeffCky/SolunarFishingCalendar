@@ -23,7 +23,7 @@ namespace SolunarFishing
             //DateTime startDate = DateTime.Parse("02/28/2022");
             DateTime endDate = DateTime.Parse(UserInterface.Date);
             string apiDate = endDate.ToString("yyyyMMdd");
-            GetLongitudeLatitude.ReturnLongitudeLatitude(UserInterface.ZipCode);
+           
             for (int i = 0; i < numberOfDays; i++)
             {
                 var line = await LoadSolunarData(GetLongitudeLatitude.Latitude, GetLongitudeLatitude.Longitude, apiDate);

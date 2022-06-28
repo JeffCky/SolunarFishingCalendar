@@ -10,7 +10,7 @@ namespace SolunarFishing
         public static float Longitude { get; set; }
         public static float Latitude { get; set; }
 
-        public static void ReturnLongitudeLatitude(string zipCode)
+        public static bool SetLongitudeLatitude(string zipCode)
         {
             List<ZipCodeToLongitudeLatitudeModel> zipsToLongLat = new List<ZipCodeToLongitudeLatitudeModel>();
             string path = Directory.GetCurrentDirectory();
@@ -21,11 +21,19 @@ namespace SolunarFishing
                 string json = r.ReadToEnd();
                 zipsToLongLat = JsonSerializer.Deserialize<List<ZipCodeToLongitudeLatitudeModel>>(json);
             }
-            var newResult = zipsToLongLat.Where(n => n.Zip == "37076");
-            Longitude = newResult.First().Longitude;
-            Latitude = newResult.First().Latitude;
-            // Console.WriteLine(newResult.First().City);
+            var newResult = zipsToLongLat.Where(n => n.Zip == zipCode);
 
+            if (newResult.Any())
+            {
+                Longitude = newResult.First().Longitude;
+                Latitude = newResult.First().Latitude;
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
             
         }
     }
