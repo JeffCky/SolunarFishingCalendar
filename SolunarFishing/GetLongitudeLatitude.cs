@@ -28,7 +28,6 @@ namespace SolunarFishing
                 Longitude = newResult.First().Longitude;
                 Latitude = newResult.First().Latitude;
                 return true;
-
             }
             else
             {

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace SolunarFishing
 {
-    public static class ApiDataProcessor<T>
+    public static class ApiDataProcessor
     {
-        public static async Task<T> LoadApiData(string url = "")
+        public static async Task<string> LoadApiData(string url = "")
         {
             
 
@@ -15,7 +16,7 @@ namespace SolunarFishing
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    T result = await response.Content.ReadAsAsync<T>();
+                    string result = await response.Content.ReadAsStringAsync();
                     
                     return result;
                 }

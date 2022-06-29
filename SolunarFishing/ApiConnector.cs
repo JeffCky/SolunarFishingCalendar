@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
 
+
 namespace SolunarFishing
 {
     public static class ApiConnector
