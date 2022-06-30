@@ -41,6 +41,9 @@ namespace SolunarFishing
                     Date = endDate.AddDays(i).Date,
                     SunRise = data.SunRise,
                     SunSet = data.SunSet,
+                    MoonPhase = data.MoonPhase,
+                    MoonRise = data.MoonRise,
+                    MoonSet = data.MoonSet,
                     DayRating = data.DayRating,
                     HourlyRating = data.HourlyRating,
                  
@@ -50,30 +53,51 @@ namespace SolunarFishing
             }
 
             var table = new Table();
-            table.AddColumn("Today's Date");
+            table.AddColumn("Fishing Date");
+            table.AddColumn("Hourly Rating Chart");
+            table.AddColumn(new TableColumn("Fishing Quality").Centered());
             table.AddColumn(new TableColumn("Sunrise").Centered());
             table.AddColumn(new TableColumn("Sunset").Centered());
-            table.AddColumn(new TableColumn("Fishing Quality").Centered());
-            
+            table.AddColumn(new TableColumn("Moon Phase").Centered());
+            table.AddColumn(new TableColumn("Moonrise").Centered());
+            table.AddColumn(new TableColumn("Moonset").Centered());
+
             foreach (var item in forecast)
             {
                 // Add some rows
-                table.AddRow(item.Date.ToString("d"), $"[green]{item.SunRise}[/]", $"[#ff00ff]{item.SunSet}[/]", $"[yellow]{item.DayRating}[/]");
-                //table.AddRow($"[green]{item.hourlyRating._0}[/]", $"[green]{item.hourlyRating._1}[/]", $"[green]{item.hourlyRating._2}[/]", $"[green]{item.hourlyRating._3}[/]");
-                 
-
-                table.AddRow(new BarChart()
-                   .Width(60)
-                   .Label("[green bold underline]Hourly Rating[/]")
-                   .CenterLabel()
-                   .AddItem("1:00 AM", item.HourlyRating._0, Color.Yellow)
-                   .AddItem("2:00 AM", item.HourlyRating._1, Color.Green)
-                   .AddItem("3:00 AM", item.HourlyRating._2, Color.Red));
+                //table.AddRow(item.Date.ToString("d"), $"[white]{item.DayRating}[/]", $"[white]{item.SunRise}[/]", $"[white]{item.SunSet}[/]", $"[white]{item.MoonPhase}[/]", $"[white]{item.MoonRise}[/]", $"[white]{item.MoonSet}[/]");
+                table.AddRow(
+                    new Markup(item.Date.ToString("d")), 
+                    new BarChart()
+                       .Width(60)
+                       .Label($"[yellow bold underline]{item.Date.ToString("d")}[/]")
+                       .CenterLabel()
+                       .AddItem("1:00 AM", item.HourlyRating.Zero, Color.Yellow)
+                       .AddItem("2:00 AM", item.HourlyRating.One, Color.Green)
+                       .AddItem("3:00 AM", item.HourlyRating.Two, Color.Red)
+                       .AddItem("4:00 AM", item.HourlyRating.Three, Color.Blue)
+                       .AddItem("5:00 AM", item.HourlyRating.Four, Color.Pink1)
+                       .AddItem("6:00 AM", item.HourlyRating.Five, Color.Orange1)
+                       .AddItem("7:00 AM", item.HourlyRating.Six, Color.Yellow)
+                       .AddItem("8:00 AM", item.HourlyRating.Seven, Color.Green)
+                       .AddItem("9:00 AM", item.HourlyRating.Eight, Color.Red)
+                       .AddItem("10:00 AM", item.HourlyRating.Nine, Color.Blue)
+                       .AddItem("11:00 AM", item.HourlyRating.Ten, Color.Pink1)
+                       .AddItem("12:00 AM", item.HourlyRating.Eleven, Color.Orange1),
+                    new Markup($"[white]{item.DayRating}[/]"), 
+                    new Markup($"[white]{item.SunRise}[/]"),
+                    new Markup($"[white]{item.SunSet}[/]"),
+                    new Markup($"[white]{item.MoonPhase}[/]"),
+                    new Markup($"[white]{item.MoonRise}[/]"),
+                    new Markup($"[white]{item.MoonSet}[/]"));
+                
 
             }
-            
+            Console.SetWindowSize(200, 40);
             AnsiConsole.Write(table);
             
+ 
+        
 
             return forecast;
         }
