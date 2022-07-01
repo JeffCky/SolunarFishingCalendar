@@ -17,6 +17,10 @@ namespace SolunarFishing
 
         public static void AskAndRetrieveUserInput()
         {
+            if (OperatingSystem.IsWindows())
+            {
+                Console.SetWindowSize(120, 40);
+            }
             Console.WriteLine("Welcome to our Fishing Forecaster. We can show you a ");
             Console.WriteLine("1 day,");
             Console.WriteLine("7 day,");

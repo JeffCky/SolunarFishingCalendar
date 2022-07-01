@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using static SolunarForecastModel;
-using Newtonsoft.Json;
 
 namespace SolunarFishing
 {
@@ -46,54 +44,92 @@ namespace SolunarFishing
                     MoonSet = data.MoonSet,
                     DayRating = data.DayRating,
                     HourlyRating = data.HourlyRating,
-                 
+                    Minor1Start = data.Minor1Start,
+                    Minor1Stop = data.Minor1Stop,
+                    Minor2Start = data.Minor2Start,
+                    Minor2Stop = data.Minor2Stop,
+                    Major1Start = data.Major1Start,
+                    Major1Stop = data.Major1Stop,
+                    Major2Start = data.Major2Start,
+                    Major2Stop = data.Minor2Stop,
+
+
+
                 }); 
                 apiDate = endDate.AddDays(i).Date.ToString("yyyyMMdd");
 
             }
 
             var table = new Table();
-            table.AddColumn("Fishing Date");
-            table.AddColumn("Hourly Rating Chart");
-            table.AddColumn(new TableColumn("Fishing Quality").Centered());
-            table.AddColumn(new TableColumn("Sunrise").Centered());
-            table.AddColumn(new TableColumn("Sunset").Centered());
-            table.AddColumn(new TableColumn("Moon Phase").Centered());
-            table.AddColumn(new TableColumn("Moonrise").Centered());
-            table.AddColumn(new TableColumn("Moonset").Centered());
-
+            table.AddColumn(new TableColumn("[bold]Best Daily Fishing Times Bar Chart[/]").Centered());
+            table.AddColumn(new TableColumn("[bold]Daily Fishing Events[/]").Centered());
+            
             foreach (var item in forecast)
             {
                 // Add some rows
-                //table.AddRow(item.Date.ToString("d"), $"[white]{item.DayRating}[/]", $"[white]{item.SunRise}[/]", $"[white]{item.SunSet}[/]", $"[white]{item.MoonPhase}[/]", $"[white]{item.MoonRise}[/]", $"[white]{item.MoonSet}[/]");
-                table.AddRow(
-                    new Markup(item.Date.ToString("d")), 
-                    new BarChart()
-                       .Width(60)
-                       .Label($"[yellow bold underline]{item.Date.ToString("d")}[/]")
-                       .CenterLabel()
-                       .AddItem("1:00 AM", item.HourlyRating.Zero, Color.Yellow)
-                       .AddItem("2:00 AM", item.HourlyRating.One, Color.Green)
-                       .AddItem("3:00 AM", item.HourlyRating.Two, Color.Red)
-                       .AddItem("4:00 AM", item.HourlyRating.Three, Color.Blue)
-                       .AddItem("5:00 AM", item.HourlyRating.Four, Color.Pink1)
-                       .AddItem("6:00 AM", item.HourlyRating.Five, Color.Orange1)
-                       .AddItem("7:00 AM", item.HourlyRating.Six, Color.Yellow)
-                       .AddItem("8:00 AM", item.HourlyRating.Seven, Color.Green)
-                       .AddItem("9:00 AM", item.HourlyRating.Eight, Color.Red)
-                       .AddItem("10:00 AM", item.HourlyRating.Nine, Color.Blue)
-                       .AddItem("11:00 AM", item.HourlyRating.Ten, Color.Pink1)
-                       .AddItem("12:00 AM", item.HourlyRating.Eleven, Color.Orange1),
-                    new Markup($"[white]{item.DayRating}[/]"), 
-                    new Markup($"[white]{item.SunRise}[/]"),
-                    new Markup($"[white]{item.SunSet}[/]"),
-                    new Markup($"[white]{item.MoonPhase}[/]"),
-                    new Markup($"[white]{item.MoonRise}[/]"),
-                    new Markup($"[white]{item.MoonSet}[/]"));
-                
+                Color barColor1 = Color.Yellow;
+                Color barColor2 = Color.SkyBlue1;
+                var hourlyBarChart = new BarChart()
+                    .Width(60)
+                    .Label($"[bold underline]{item.Date.ToString("d")}[/]")
+                    .CenterLabel()
+                    .AddItem(" ", 100, Color.Black)
+                    .AddItem($"[{barColor1} bold underline]12:00 AM[/]", item.HourlyRating.Zero == 0 ? 10 : item.HourlyRating.Zero, barColor1)
+                    .AddItem($"[{barColor2} bold underline]1:00 AM[/]", item.HourlyRating.One == 0 ? 10 : item.HourlyRating.One, barColor2)
+                    .AddItem($"[{barColor1} bold underline]2:00 AM[/]", item.HourlyRating.Two == 0 ? 10 : item.HourlyRating.Two, barColor1)
+                    .AddItem($"[{barColor2} bold underline]3:00 AM[/]", item.HourlyRating.Three == 0 ? 10 : item.HourlyRating.Three, barColor2)
+                    .AddItem($"[{barColor1} bold underline]4:00 AM[/]", item.HourlyRating.Four == 0 ? 10 : item.HourlyRating.Four, barColor1)
+                    .AddItem($"[{barColor2} bold underline]5:00 AM[/]", item.HourlyRating.Five == 0 ? 10 : item.HourlyRating.Five, barColor2)
+                    .AddItem($"[{barColor1} bold underline]6:00 AM[/]", item.HourlyRating.Six == 0 ? 10 : item.HourlyRating.Six, barColor1)
+                    .AddItem($"[{barColor2} bold underline]7:00 AM[/]", item.HourlyRating.Seven == 0 ? 10 : item.HourlyRating.Seven, barColor2)
+                    .AddItem($"[{barColor1} bold underline]8:00 AM[/]", item.HourlyRating.Eight == 0 ? 10 : item.HourlyRating.Eight, barColor1)
+                    .AddItem($"[{barColor2} bold underline]9:00 AM[/]", item.HourlyRating.Nine == 0 ? 10 : item.HourlyRating.Nine, barColor2)
+                    .AddItem($"[{barColor1} bold underline]10:00 AM[/]", item.HourlyRating.Ten == 0 ? 10 : item.HourlyRating.Ten, barColor1)
+                    .AddItem($"[{barColor2} bold underline]11:00 AM[/]", item.HourlyRating.Eleven == 0 ? 10 : item.HourlyRating.Eleven, barColor2)
+                    .AddItem($"[{barColor1} bold underline]Noon[/]", item.HourlyRating.Twelve == 0 ? 10 : item.HourlyRating.Twelve, barColor1)
+                    .AddItem($"[{barColor2} bold underline]1:00 PM[/]", item.HourlyRating.Thirteen == 0 ? 10 : item.HourlyRating.Thirteen, barColor2)
+                    .AddItem($"[{barColor1} bold underline]2:00 PM[/]", item.HourlyRating.Fourteen == 0 ? 10 : item.HourlyRating.Fourteen, barColor1)
+                    .AddItem($"[{barColor2} bold underline]3:00 PM[/]", item.HourlyRating.Fifteen == 0 ? 10 : item.HourlyRating.Fifteen, barColor2)
+                    .AddItem($"[{barColor1} bold underline]4:00 PM[/]", item.HourlyRating.Sixteen == 0 ? 10 : item.HourlyRating.Sixteen, barColor1)
+                    .AddItem($"[{barColor2} bold underline]5:00 PM[/]", item.HourlyRating.Seventeen == 0 ? 10 : item.HourlyRating.Seventeen, barColor2)
+                    .AddItem($"[{barColor1} bold underline]6:00 PM[/]", item.HourlyRating.Eighteen == 0 ? 10 : item.HourlyRating.Eighteen, barColor1)
+                    .AddItem($"[{barColor2} bold underline]7:00 PM[/]", item.HourlyRating.Nineteen == 0 ? 10 : item.HourlyRating.Nineteen, barColor2)
+                    .AddItem($"[{barColor1} bold underline]8:00 PM[/]", item.HourlyRating.Twenty == 0 ? 10 : item.HourlyRating.Twenty, barColor1)
+                    .AddItem($"[{barColor2} bold underline]9:00 PM[/]", item.HourlyRating.TwentyOne == 0 ? 10 : item.HourlyRating.TwentyOne, barColor2)
+                    .AddItem($"[{barColor1} bold underline]10:00 PM[/]", item.HourlyRating.TwentyTwo == 0 ? 10 : item.HourlyRating.TwentyTwo, barColor1)
+                    .AddItem($"[{barColor2} bold underline]11:00 PM[/]", item.HourlyRating.TwentyThree == 0 ? 10 : item.HourlyRating.TwentyThree, barColor2);
+                    
 
+                var insetTable = new Table();
+                insetTable.AddColumn(new TableColumn("[bold]Daily Events[/]").Centered());
+                insetTable.AddRow($"Date: {item.Date.ToString("d")}");
+                insetTable.AddRow($"Rating our of 5: [white]{item.DayRating}[/]");
+                insetTable.AddRow("");
+                insetTable.AddRow($"Sunrise: [white]{item.SunRise}[/]");
+                insetTable.AddRow($"Sunset: [white]{item.SunSet}[/]");
+                insetTable.AddRow("");
+                insetTable.AddRow($"Moon Phase: [white]{item.MoonPhase}[/]");
+                insetTable.AddRow($"Moon Rise:[white]{item.MoonRise}[/]");
+                insetTable.AddRow($"Moon Set: [white]{item.MoonSet}[/]");
+                insetTable.AddRow("");
+                insetTable.AddRow($"First Major Start: [white]{item.Major1Start}[/]");
+                insetTable.AddRow($"First Major Stop: [white]{item.Major1Stop}[/]");
+                insetTable.AddRow($"Second Major Start: [white]{item.Major2Start}[/]");
+                insetTable.AddRow($"Second Major Stop: [white]{item.Major2Stop}[/]");
+                insetTable.AddRow("");
+                insetTable.AddRow($"First Minor Start: [white]{item.Minor1Start}[/]");
+                insetTable.AddRow($"First Minor Stop: [white]{item.Minor1Stop}[/]");
+                insetTable.AddRow($"Second Minor Start: [white]{item.Minor2Start}[/]");
+                insetTable.AddRow($"Second Minor Stop: [white]{item.Minor2Stop}[/]");
+
+
+                table.AddRow(hourlyBarChart, insetTable);
+                table.AddRow("");
+                table.AddRow("[yellow bold underline]--------------------------------------------------------------------------------[/]", "[yellow bold underline]---------------------------------[/]");
+                table.AddRow("");
             }
-            Console.SetWindowSize(200, 40);
+            
+            
             AnsiConsole.Write(table);
             
  
