@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -73,7 +74,7 @@ namespace SolunarFishing
                     .Width(60)
                     .Label($"[bold underline]{item.Date.ToString("d")}[/]")
                     .CenterLabel()
-                    .AddItem(" ", 100, Color.Black)
+                    .AddItem(" ", 100, Console.BackgroundColor)
                     .AddItem($"[{barColor1} bold underline]12:00 AM[/]", item.HourlyRating.Zero == 0 ? 10 : item.HourlyRating.Zero, barColor1)
                     .AddItem($"[{barColor2} bold underline]1:00 AM[/]", item.HourlyRating.One == 0 ? 10 : item.HourlyRating.One, barColor2)
                     .AddItem($"[{barColor1} bold underline]2:00 AM[/]", item.HourlyRating.Two == 0 ? 10 : item.HourlyRating.Two, barColor1)
@@ -103,24 +104,24 @@ namespace SolunarFishing
                 var insetTable = new Table();
                 insetTable.AddColumn(new TableColumn("[bold]Daily Events[/]").Centered());
                 insetTable.AddRow($"Date: {item.Date.ToString("d")}");
-                insetTable.AddRow($"Rating our of 5: [white]{item.DayRating}[/]");
+                insetTable.AddRow($"[bold]Rating out of 5: {item.DayRating}[/]");
                 insetTable.AddRow("");
-                insetTable.AddRow($"Sunrise: [white]{item.SunRise}[/]");
-                insetTable.AddRow($"Sunset: [white]{item.SunSet}[/]");
+                insetTable.AddRow($"[bold]Sunrise: {item.SunRise}[/]");
+                insetTable.AddRow($"[bold]Sunset: {item.SunSet}[/]");
                 insetTable.AddRow("");
-                insetTable.AddRow($"Moon Phase: [white]{item.MoonPhase}[/]");
-                insetTable.AddRow($"Moon Rise:[white]{item.MoonRise}[/]");
-                insetTable.AddRow($"Moon Set: [white]{item.MoonSet}[/]");
+                insetTable.AddRow($"[bold]Moon Phase: {item.MoonPhase}[/]");
+                insetTable.AddRow($"[bold]Moon Rise: {item.MoonRise}[/]");
+                insetTable.AddRow($"[bold]Moon Set: {item.MoonSet}[/]");
                 insetTable.AddRow("");
-                insetTable.AddRow($"First Major Start: [white]{item.Major1Start}[/]");
-                insetTable.AddRow($"First Major Stop: [white]{item.Major1Stop}[/]");
-                insetTable.AddRow($"Second Major Start: [white]{item.Major2Start}[/]");
-                insetTable.AddRow($"Second Major Stop: [white]{item.Major2Stop}[/]");
+                insetTable.AddRow($"[bold]First Major Start: {item.Major1Start}[/]");
+                insetTable.AddRow($"[bold]First Major Stop: {item.Major1Stop}[/]");
+                insetTable.AddRow($"[bold]Second Major Start: {item.Major2Start}[/]");
+                insetTable.AddRow($"[bold]Second Major Stop: {item.Major2Stop}[/]");
                 insetTable.AddRow("");
-                insetTable.AddRow($"First Minor Start: [white]{item.Minor1Start}[/]");
-                insetTable.AddRow($"First Minor Stop: [white]{item.Minor1Stop}[/]");
-                insetTable.AddRow($"Second Minor Start: [white]{item.Minor2Start}[/]");
-                insetTable.AddRow($"Second Minor Stop: [white]{item.Minor2Stop}[/]");
+                insetTable.AddRow($"[bold]First Minor Start: {item.Minor1Start}[/]");
+                insetTable.AddRow($"[bold]First Minor Stop: {item.Minor1Stop}[/]");
+                insetTable.AddRow($"[bold]Second Minor Start: {item.Minor2Start}[/]");
+                insetTable.AddRow($"[bold]Second Minor Stop: {item.Minor2Stop}[/]");
 
 
                 table.AddRow(hourlyBarChart, insetTable);
