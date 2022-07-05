@@ -1,7 +1,6 @@
 ﻿using Spectre.Console;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -24,12 +23,12 @@ namespace SolunarFishing
             List<SolunarForecastModel> forecast = new List<SolunarForecastModel>();
 
             
-            DateTime endDate = DateTime.Parse(UserInterface.Date);
-            string apiDate = endDate.ToString("yyyyMMdd");
+            DateTime userDateInput = DateTime.Parse(UserInterface.Date);
+            string dateForAPI = userDateInput.ToString("yyyyMMdd");
            
             for (int i = 0; i < numberOfDays; i++)
             {
-                var line = await LoadSolunarData(GetLongitudeLatitude.Latitude, GetLongitudeLatitude.Longitude, apiDate);
+                var line = await LoadSolunarData(GetLongitudeLatitude.Latitude, GetLongitudeLatitude.Longitude, dateForAPI);
                 var options = new JsonSerializerOptions();
                 options.PropertyNameCaseInsensitive = true;
                 SolunarForecastModel data = System.Text.Json.JsonSerializer.Deserialize<SolunarForecastModel>(line, options);
@@ -37,27 +36,27 @@ namespace SolunarFishing
 
                 forecast.Add(new SolunarForecastModel()
                 {
-                    Date = endDate.AddDays(i).Date,
-                    SunRise = data.SunRise,
-                    SunSet = data.SunSet,
+                    Date = userDateInput.AddDays(i).Date,
+                    SunRise = Utilities.TwentyFourToTwelveHour(data.SunRise),
+                    SunSet = Utilities.TwentyFourToTwelveHour(data.SunSet),
                     MoonPhase = data.MoonPhase,
-                    MoonRise = data.MoonRise,
-                    MoonSet = data.MoonSet,
+                    MoonRise = Utilities.TwentyFourToTwelveHour(data.MoonRise),
+                    MoonSet = Utilities.TwentyFourToTwelveHour(data.MoonSet),
                     DayRating = data.DayRating,
                     HourlyRating = data.HourlyRating,
-                    Minor1Start = data.Minor1Start,
-                    Minor1Stop = data.Minor1Stop,
-                    Minor2Start = data.Minor2Start,
-                    Minor2Stop = data.Minor2Stop,
-                    Major1Start = data.Major1Start,
-                    Major1Stop = data.Major1Stop,
-                    Major2Start = data.Major2Start,
-                    Major2Stop = data.Minor2Stop,
+                    Minor1Start = Utilities.TwentyFourToTwelveHour(data.Minor1Start),
+                    Minor1Stop = Utilities.TwentyFourToTwelveHour(data.Minor1Stop),
+                    Minor2Start = Utilities.TwentyFourToTwelveHour(data.Minor2Start),
+                    Minor2Stop = Utilities.TwentyFourToTwelveHour(data.Minor2Stop),
+                    Major1Start = Utilities.TwentyFourToTwelveHour(data.Major1Start),
+                    Major1Stop = Utilities.TwentyFourToTwelveHour(data.Major1Stop),
+                    Major2Start = Utilities.TwentyFourToTwelveHour(data.Major2Start),
+                    Major2Stop = Utilities.TwentyFourToTwelveHour(data.Minor2Stop),
 
 
 
                 }); 
-                apiDate = endDate.AddDays(i).Date.ToString("yyyyMMdd");
+                dateForAPI = userDateInput.AddDays(i).Date.ToString("yyyyMMdd");
 
             }
 
@@ -132,9 +131,17 @@ namespace SolunarFishing
             
             
             AnsiConsole.Write(table);
-            
- 
-        
+
+            Console.WriteLine("Would you like to write your forecast to a CSV to your descktop? Type y to write a file, enter to continue or q to quit");
+            string userInput = Console.ReadLine();
+            if(userInput == "y")
+            {
+                Utilities.WriteCsvFile(forecast);
+            } 
+            else if(userInput == "q")
+            {
+                Environment.Exit(0);
+            }
 
             return forecast;
         }

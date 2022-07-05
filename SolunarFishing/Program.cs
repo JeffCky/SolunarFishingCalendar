@@ -11,25 +11,26 @@ namespace SolunarFishing
         private static bool quit = false;
         static async Task Main(string[] args)
         {
-            Console.WriteLine(ConvertTime.TwentyFourToTwelveHour("12:04"));
-            
-            //while (!quit)
-            //{
-            //    InitializeClient();
-            //    AskAndRetrieveUserInput();
+            //Console.WriteLine(ConvertTime.TwentyFourToTwelveHour("12:04"));
 
-            //    await Forecast(int.Parse(UserInterface.ForecastType));
+            while (!quit)
+            {
+                InitializeClient();
+                AskAndRetrieveUserInput();
 
-            //    Console.WriteLine("Do you want to try another date and/or zip code? Type y to continue or q to quit");
-            //    if(Console.ReadLine().Equals("q"))
-            //    {
-            //        quit = true;
-            //    }else
-            //    {
-            //        quit = false;
-            //    }
+                await Forecast(int.Parse(UserInterface.ForecastType));
 
-            //}
+                Console.WriteLine("Do you want to try another date and/or zip code? Type y to continue or q to quit...");
+                if (Console.ReadLine().Equals("q"))
+                {
+                    quit = true;
+                }
+                else
+                {
+                    quit = false;
+                }
+
+            }
 
 
         }
