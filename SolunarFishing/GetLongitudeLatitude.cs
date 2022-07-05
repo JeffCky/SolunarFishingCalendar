@@ -15,7 +15,7 @@ namespace SolunarFishing
         {
             List<ZipCodeToLongitudeLatitudeModel> zipsToLongLat = new List<ZipCodeToLongitudeLatitudeModel>();
             //string path = Directory.GetCurrentDirectory();
-            //string path2 = Environment.CurrentDirectory;
+            
             string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
             string fileName = Path.GetFullPath(Path.Combine(dir, @"..\..\..\Resource\\US_Zips.json"));
