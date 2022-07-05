@@ -45,9 +45,9 @@ namespace SolunarFishing
             Console.WriteLine("Thank you.");
             Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine("Finaly, we need to know which forecast you would like.");
-            Console.WriteLine("Type 1 for a 1 day report.");
-            Console.WriteLine("Type 7 for a 7 day report.");
-            Console.WriteLine("Type 30 for a 30 day report.");
+            Console.WriteLine("Enter 1 for a 1 day report.");
+            Console.WriteLine("Enter 7 for a 7 day report.");
+            Console.WriteLine("Enter 30 for a 30 day report.");
             inputValue = Console.ReadLine();
             GetCorrectDataInput(InputType.ForecastTypeInput, inputValue);
             
