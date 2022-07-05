@@ -20,7 +20,7 @@ public class SolunarForecastModel
     public string Major2Stop { get; set; }
     public int DayRating { get; set; }
 
-    public HourlyRating HourlyRating { get; set; }
+    public HourlyRatingModel HourlyRating { get; set; }
 
     
 
