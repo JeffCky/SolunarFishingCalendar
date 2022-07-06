@@ -14,16 +14,10 @@ namespace SolunarFishing
         public static bool SetLongitudeLatitude(string zipCode)
         {
             List<ZipCodeToLongitudeLatitudeModel> zipsToLongLat = new List<ZipCodeToLongitudeLatitudeModel>();
-            //string path = Directory.GetCurrentDirectory();
-            //string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            //string fileName = Path.GetFullPath(Path.Combine(dir, @"..\..\..\Resource\\US_Zips.json"));
-            string fileName = @"..\..\..\Resource\US_Zips.json";
+            
+            var jsonText = File.ReadAllText(@"..\..\..\Resource\US_Zips.json");
+            zipsToLongLat = JsonSerializer.Deserialize<List<ZipCodeToLongitudeLatitudeModel>>(jsonText);
 
-            using (StreamReader r = new StreamReader(fileName))
-            {
-                string json = r.ReadToEnd();
-                zipsToLongLat = JsonSerializer.Deserialize<List<ZipCodeToLongitudeLatitudeModel>>(json);
-            }
             var newResult = zipsToLongLat.Where(n => n.Zip == zipCode);
 
             if (newResult.Any())
