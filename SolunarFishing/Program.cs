@@ -8,23 +8,21 @@ namespace SolunarFishing
 {
     internal class Program
     {
-        private static bool quit = false;
+        public static bool quit = false;
         static async Task Main(string[] args)
         {
-            //Console.WriteLine(ConvertTime.TwentyFourToTwelveHour("12:04"));
-
+            
             while (!quit)
             {
 
-                int errorFlag = 0; try
+                int errorFlag = 0; 
+                try
                 {
-                    
                     InitializeClient();
                     errorFlag = 1;
                     AskAndRetrieveUserInput();
                     errorFlag = 2;
                     await Forecast(int.Parse(UserInterface.ForecastType));
-
                 }
                 catch (Exception)
                 {
@@ -42,27 +40,9 @@ namespace SolunarFishing
                     }
                    
                 }
-                bool goodUserInput = true;
-                while (goodUserInput)
-                {
-                    Console.WriteLine("Do you want to try another date and/or zip code? Type 'y' to continue or 'q' to quit...");
-                    string userInput = Console.ReadLine();
-                    if (userInput == "q" || userInput == "'q'")
-                    {
-                        quit = true;
-                        goodUserInput = false;
-                    }
-                    else if (userInput == "y" || userInput == "'y'")
-                    {
-                        quit = false;
-                        goodUserInput = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("That was not a 'y' or 'q' as input. Try again");
-                        
-                    }
-                }
+                Utilities.DoItAgainLoop();
+
+                
             }
 
 

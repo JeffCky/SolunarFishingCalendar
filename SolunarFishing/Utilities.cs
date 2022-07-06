@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using SolunarFishing;
 
 namespace SolunarFishing
 {
@@ -49,6 +50,36 @@ namespace SolunarFishing
                 return "Sorry, there was a problem writing the file.";
             }
 
+            
+        }
+
+        public static void DoItAgainLoop()
+        {
+            bool goodUserInput = true;
+            while (goodUserInput)
+            {
+                Console.WriteLine("Do you want to try another date and/or zip code? Type 'y' to continue or 'q' to quit...");
+                string userInput = Console.ReadLine();
+                if (userInput == "q" || userInput == "'q'")
+                {
+                    Program.quit = true;
+                    goodUserInput = false;
+                    
+                }
+                else if (userInput == "y" || userInput == "'y'")
+                {
+                    Program.quit = false;
+                    goodUserInput = false;
+                    
+                }
+                else
+                {
+                    Console.WriteLine("That was not a 'y' or 'q' as input. Try again");
+                    
+
+                }
+                
+            }
             
         }
     }
