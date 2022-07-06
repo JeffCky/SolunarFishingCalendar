@@ -12,10 +12,19 @@ namespace SolunarFishing
         {
 
             string url = $"https://api.solunar.org/solunar/{latitude},{longitude},{date},{timeZone}";
-            var solunar = await ApiDataProcessor.LoadApiData(url);
-            //DateTime correctDate = Convert.ToDateTime("06/16/2022");
-            //solunar.Date = correctDate;
-            return solunar;
+            try
+            {
+                var solunar = await ApiDataProcessor.LoadApiData(url);
+
+                return solunar;
+            }
+            catch (Exception)
+            {
+                Console.Write("Error occurred.No data retrieved from the api website.");
+                return "00";
+                
+            }
+            
         }
 
         public static async Task<List<SolunarForecastModel>> Forecast(int numberOfDays)
@@ -60,9 +69,9 @@ namespace SolunarFishing
 
             }
 
-            var table = new Table();
-            table.AddColumn(new TableColumn("[bold]Best Daily Fishing Times Bar Chart[/]").Centered());
-            table.AddColumn(new TableColumn("[bold]Daily Fishing Events[/]").Centered());
+            var userOutputTable = new Table();
+            userOutputTable.AddColumn(new TableColumn("[bold]Best Daily Fishing Times Bar Chart[/]").Centered());
+            userOutputTable.AddColumn(new TableColumn("[bold]Daily Fishing Events[/]").Centered());
             
             foreach (var item in forecast)
             {
@@ -123,14 +132,14 @@ namespace SolunarFishing
                 insetTable.AddRow($"[bold]Second Minor Stop: {item.Minor2Stop}[/]");
 
 
-                table.AddRow(hourlyBarChart, insetTable);
-                table.AddRow("");
-                table.AddRow("[yellow bold underline]--------------------------------------------------------------------------------[/]", "[yellow bold underline]---------------------------------[/]");
-                table.AddRow("");
+                userOutputTable.AddRow(hourlyBarChart, insetTable);
+                userOutputTable.AddRow("");
+                userOutputTable.AddRow("[yellow bold underline]--------------------------------------------------------------------------------[/]", "[yellow bold underline]---------------------------------[/]");
+                userOutputTable.AddRow("");
             }
             
             
-            AnsiConsole.Write(table);
+            AnsiConsole.Write(userOutputTable);
 
             Console.WriteLine("Would you like to write your forecast to a CSV file to your desktop?");
             Console.WriteLine("Enter 'y' to write a file to your desktop,");

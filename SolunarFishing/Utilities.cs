@@ -37,10 +37,19 @@ namespace SolunarFishing
         {
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string timeStamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            using var writer = new StreamWriter($"{desktop}/forecast{timeStamp}.csv");
-            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csv.WriteRecords(forecast);
-            return "File written successfully.";
+            try
+            {
+                using var writer = new StreamWriter($"{desktop}/forecast{timeStamp}.csv");
+                using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+                csv.WriteRecords(forecast);
+                return "File written successfully.";
+            }
+            catch (Exception)
+            {
+                return "Sorry, there was a problem writing the file.";
+            }
+
+            
         }
     }
 }

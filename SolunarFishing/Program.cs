@@ -15,10 +15,34 @@ namespace SolunarFishing
 
             while (!quit)
             {
-                InitializeClient();
-                AskAndRetrieveUserInput();
 
-                await Forecast(int.Parse(UserInterface.ForecastType));
+                int errorFlag = 0; try
+                {
+                    
+                    InitializeClient();
+                    errorFlag = 1;
+                    AskAndRetrieveUserInput();
+                    errorFlag = 2;
+                    await Forecast(int.Parse(UserInterface.ForecastType));
+
+                }
+                catch (Exception)
+                {
+                    if (errorFlag == 0)
+                    {
+                        Console.WriteLine("Sorry there was an error initializing.");
+                    }
+                    else if(errorFlag == 1)
+                    {
+                        Console.WriteLine("Sorry there was an error collecting input.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry there was an error with data from the api.");
+                    }
+                   
+                }
+               
 
                 Console.WriteLine("Do you want to try another date and/or zip code? Type 'y' to continue or 'q' to quit...");
                 string userInput = Console.ReadLine();
