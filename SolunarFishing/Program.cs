@@ -42,19 +42,27 @@ namespace SolunarFishing
                     }
                    
                 }
-               
-
-                Console.WriteLine("Do you want to try another date and/or zip code? Type 'y' to continue or 'q' to quit...");
-                string userInput = Console.ReadLine();
-                if (userInput == "q" || userInput == "'q'") 
+                bool goodUserInput = true;
+                while (goodUserInput)
                 {
-                    quit = true;
+                    Console.WriteLine("Do you want to try another date and/or zip code? Type 'y' to continue or 'q' to quit...");
+                    string userInput = Console.ReadLine();
+                    if (userInput == "q" || userInput == "'q'")
+                    {
+                        quit = true;
+                        goodUserInput = false;
+                    }
+                    else if (userInput == "y" || userInput == "'y'")
+                    {
+                        quit = false;
+                        goodUserInput = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("That was not a 'y' or 'q' as input. Try again");
+                        
+                    }
                 }
-                else
-                {
-                    quit = false;
-                }
-
             }
 
 
