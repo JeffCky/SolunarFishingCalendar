@@ -33,15 +33,14 @@ namespace SolunarFishing
 
         }
 
-        public static void WriteCsvFile(List<SolunarForecastModel> forecast)
+        public static string WriteCsvFile(List<SolunarForecastModel> forecast)
         {
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string timeStamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            using (var writer = new StreamWriter($"{desktop}/forecast{timeStamp}.csv"))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                csv.WriteRecords(forecast);
-            }
+            using var writer = new StreamWriter($"{desktop}/forecast{timeStamp}.csv");
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csv.WriteRecords(forecast);
+            return "File written successfully.";
         }
     }
 }

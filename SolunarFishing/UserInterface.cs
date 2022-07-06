@@ -1,4 +1,5 @@
 ﻿using SolunarFishing.Enums;
+using Spectre.Console;
 using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -21,46 +22,63 @@ namespace SolunarFishing
             {
                 Console.SetWindowSize(120, 40);
             }
-            Console.WriteLine("Welcome to our Fishing Forecaster. We can show you a ");
-            Console.WriteLine("1 day,");
-            Console.WriteLine("7 day,");
-            Console.WriteLine("0r 30 day");
-            Console.WriteLine("fishing forecast. We will need a start");
-            Console.WriteLine("date and a zipcode to get started.");
-            Console.WriteLine("-------------------------------------------------------------------------");
-            Console.WriteLine("Please enter the starting date for your forecast in mm/dd/yyyy format, or q to quit.");
+
+            AnsiConsole.Write(
+                new FigletText("Welcome to our Fishing Forecaster.")
+                .Centered()
+                .Color(Color.Yellow));
+            var rule = new Rule();
+            rule.Style = Style.Parse("yellow");
+            
+            AnsiConsole.Write(rule);
+
+            Console.WriteLine();
+            centerText("We can show you a 1 day, 7 day, or 30 day fishing forecast.");
+            Console.WriteLine();
+            centerText("We will need a date and a zipcode to get started.");
+            Console.WriteLine();
+            AnsiConsole.Write(rule);
+            Console.WriteLine();
+            Console.WriteLine("Please enter the starting date for your forecast in mm/dd/yyyy format, or 'q' to quit.");
             inputValue = Console.ReadLine();
             GetCorrectDataInput(InputType.DateInput, inputValue); 
                 
             Date = inputValue;
             
             Console.WriteLine("Thank you.");
-            Console.WriteLine("-------------------------------------------------------------------------");
+            Console.WriteLine();
+            AnsiConsole.Write(rule);
+            Console.WriteLine();
             Console.WriteLine("Now please enter the 5 digit zip code of your fishing destination. This");
-            Console.WriteLine("zip code just needs to be near the water where you will be fishing.");
+            Console.WriteLine("zip code just needs to be near the water where you will be fishing, or 'q' to quit.");
             inputValue = Console.ReadLine();
             GetCorrectDataInput(InputType.ZipcodeInput, inputValue);
             
             ZipCode = inputValue;
             Console.WriteLine("Thank you.");
-            Console.WriteLine("-------------------------------------------------------------------------");
-            Console.WriteLine("Finaly, we need to know which forecast you would like.");
+            Console.WriteLine();
+            AnsiConsole.Write(rule);
+            Console.WriteLine();
+            Console.WriteLine("Finally, we need to know which forecast you would like.");
             Console.WriteLine("Enter 1 for a 1 day report.");
             Console.WriteLine("Enter 7 for a 7 day report.");
             Console.WriteLine("Enter 30 for a 30 day report.");
+            Console.WriteLine("or 'q' to quit.");
             inputValue = Console.ReadLine();
             GetCorrectDataInput(InputType.ForecastTypeInput, inputValue);
             
             ForecastType = inputValue;
             Console.WriteLine("Thank you. Please wait while we create your fishing forecast for xx day(s).");
-            Console.WriteLine("-------------------------------------------------------------------------");
-            Console.WriteLine("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            Console.WriteLine("-------------------------------------------------------------------------\n\n");
-         }
+            Console.WriteLine();
+            AnsiConsole.Write(rule);
+            centerText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            AnsiConsole.Write(rule);
+            Console.WriteLine("\n\n");
+        }
         public static string output = " ";
         private static bool VerifyInput(InputType inputType, string input)
         {
-            if (input == "q") Environment.Exit(0);
+            if (input == "q" || input == "'q'") Environment.Exit(0);
             
             switch ((int)inputType) 
             {
@@ -72,7 +90,7 @@ namespace SolunarFishing
                     }
                     else
                     {
-                        output = "Wrong date input, Please enter the starting date for your forecast in mm/dd/yyyy format, or q to quit.";
+                        output = "Wrong date input, Please enter the starting date for your forecast in mm/dd/yyyy format, or 'q' to quit.";
                         return false;
                     }
                case 2:
@@ -83,7 +101,7 @@ namespace SolunarFishing
                             return true;
                         else
                         {
-                            output = "This zip code not found, enter another to retry or q to quit.";
+                            output = "This zip code not found, enter another to retry or 'q' to quit.";
                             return false;
                         }
 
@@ -91,7 +109,7 @@ namespace SolunarFishing
                     }
                     else
                     {
-                        output = "Wrong zipcode input, Wrong Please enter the 5 digit zip code of your fishing destination, or q to quit.";
+                        output = "Wrong zipcode input, Wrong Please enter the 5 digit zip code of your fishing destination, or 'q' to quit.";
                         return false;
                     }
                case 3:
@@ -102,7 +120,7 @@ namespace SolunarFishing
                     }
                     else
                     {
-                        output = "Wrong forecast type input, Please enter the number of days in your forecast(1, 7, or 30), or q to quit.";
+                        output = "Wrong forecast type input, Please enter the number of days in your forecast(1, 7, or 30), or 'q' to quit.";
                         return false;
                     }
             };
@@ -140,7 +158,13 @@ namespace SolunarFishing
             Regex validateZipRegex = new Regex(@"^[0-9]{5}$");
             return validateZipRegex.IsMatch(testzip); 
         }
-       
+
+        private static void centerText(String text)
+        {
+            Console.Write(new string(' ', (Console.WindowWidth - text.Length) / 2));
+            Console.WriteLine(text);
+        }
+
 
     }
 }

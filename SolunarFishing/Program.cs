@@ -20,8 +20,9 @@ namespace SolunarFishing
 
                 await Forecast(int.Parse(UserInterface.ForecastType));
 
-                Console.WriteLine("Do you want to try another date and/or zip code? Type y to continue or q to quit...");
-                if (Console.ReadLine().Equals("q"))
+                Console.WriteLine("Do you want to try another date and/or zip code? Type 'y' to continue or 'q' to quit...");
+                string userInput = Console.ReadLine();
+                if (userInput == "q" || userInput == "'q'") 
                 {
                     quit = true;
                 }

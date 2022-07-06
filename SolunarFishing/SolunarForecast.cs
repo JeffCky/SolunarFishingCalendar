@@ -132,15 +132,22 @@ namespace SolunarFishing
             
             AnsiConsole.Write(table);
 
-            Console.WriteLine("Would you like to write your forecast to a CSV to your descktop? Type y to write a file, enter to continue or q to quit");
+            Console.WriteLine("Would you like to write your forecast to a CSV file to your desktop?");
+            Console.WriteLine("Enter 'y' to write a file to your desktop,");
+            Console.WriteLine("press the enter key to continue without writing a file, ");
+            Console.WriteLine("or 'q' to quit");
             string userInput = Console.ReadLine();
-            if(userInput == "y")
+            if(userInput == "y" || userInput == "'y'")
             {
-                Utilities.WriteCsvFile(forecast);
+                Console.WriteLine(Utilities.WriteCsvFile(forecast)); 
             } 
-            else if(userInput == "q")
+            else if(userInput == "q" || userInput == "'q'")
             {
                 Environment.Exit(0);
+            }
+            else
+            {
+                Console.WriteLine("No file was written.");
             }
 
             return forecast;
