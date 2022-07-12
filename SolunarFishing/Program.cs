@@ -11,7 +11,7 @@ namespace SolunarFishing
         public static bool quit = false;
         static async Task Main(string[] args)
         {
-            
+            ProgramStart(); 
             while (!quit)
             {
 

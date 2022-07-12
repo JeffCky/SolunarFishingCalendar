@@ -15,8 +15,9 @@ namespace SolunarFishing
         
 
         public static string inputValue;
-
-        public static void AskAndRetrieveUserInput()
+        private static Rule rule = new Rule();
+        
+        public static void ProgramStart()
         {
             if (OperatingSystem.IsWindows())
             {
@@ -27,9 +28,9 @@ namespace SolunarFishing
                 new FigletText("Welcome to our Fishing Forecaster.")
                 .Centered()
                 .Color(Color.Yellow));
-            var rule = new Rule();
             rule.Style = Style.Parse("yellow");
-            
+
+
             AnsiConsole.Write(rule);
 
             Console.WriteLine();
@@ -37,6 +38,11 @@ namespace SolunarFishing
             Console.WriteLine();
             centerText("We will need a date and a zipcode to get started.");
             Console.WriteLine();
+        }
+
+        public static void AskAndRetrieveUserInput()
+        {   
+            
             AnsiConsole.Write(rule);
             Console.WriteLine();
             Console.WriteLine("Please enter the starting date for your forecast in mm/dd/yyyy format, or 'q' to quit.");
