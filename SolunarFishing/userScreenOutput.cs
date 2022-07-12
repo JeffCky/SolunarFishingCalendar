@@ -17,6 +17,7 @@ namespace SolunarFishing
 
             foreach (var item in forecast)
             {
+                
                 // Add some rows
                 Color barColor1 = Color.Yellow;
                 Color barColor2 = Color.SkyBlue1;
@@ -50,12 +51,12 @@ namespace SolunarFishing
                     .AddItem($"[{barColor1} bold underline]10:00 PM[/]", item.HourlyRating.TenPMHour == 0 ? 10 : item.HourlyRating.TenPMHour, barColor1)
                     .AddItem($"[{barColor2} bold underline]11:00 PM[/]", item.HourlyRating.ElevenPMHour == 0 ? 10 : item.HourlyRating.ElevenPMHour, barColor2);
 
-
+                string dayRatingDescription = DayRatingDescription(item.DayRating);
                 var insetTable = new Table();
                 insetTable.AddColumn(new TableColumn("[bold]Daily Events[/]").Centered());
                 insetTable.AddRow($"Date: {item.Date.ToString("d")}");
                 insetTable.AddRow($"[bold]Rating out of 5: {item.DayRating}[/]");
-                insetTable.AddRow("");
+                insetTable.AddRow(dayRatingDescription);
                 insetTable.AddRow($"[bold]Sunrise: {item.SunRise}[/]");
                 insetTable.AddRow($"[bold]Sunset: {item.SunSet}[/]");
                 insetTable.AddRow("");
@@ -101,6 +102,34 @@ namespace SolunarFishing
             {
                 Console.WriteLine("No file was written.");
             }
+        }
+        private static string DayRatingDescription(int rating)
+        {
+            string description = "";
+            switch (rating)
+            {
+                case 0:
+                    description = "Bad";
+                    break;
+                case 1:
+                    description = "Poor";
+                    break;
+                case 2:
+                    description = "Fair";
+                    break;
+                case 3:
+                    description = "Good";
+                    break;
+                case 4:
+                    description = "Very good";
+                    break;
+                case 5:
+                    description = "Excellent";
+                    break;
+            }
+             return $"{description} day for fishing!";
+                 
+                    
         }
     }
 }

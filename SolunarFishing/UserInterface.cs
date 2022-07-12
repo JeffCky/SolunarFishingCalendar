@@ -22,6 +22,7 @@ namespace SolunarFishing
         {
             if (OperatingSystem.IsWindows())
             {
+                Console.SetBufferSize(120, 1600); 
                 Console.SetWindowSize(120, 40);
             }
 
