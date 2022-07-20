@@ -10,13 +10,13 @@ The app will collect 1, 7 or 30 days of data and return it to the user in a plea
 
 ### Opening Console Screen - User Input
 
-![](images/StartScreen.png)
+![](StartScreen.png)
 
 ---
 
 ### Solunar Forecast Screen
 
-![](images/ForecastScreen.png)
+![](ForecastScreen.png)
 
 This screen shows a graph of how good fishing will be by the hour of the requested day in the chart on the right.  The table on the left has a daily fishing rating on a scale from 0 to 5.  It also lists sunrise, sunset, moonrise and moonset times for the day.  It also displays the best times during the day to go fishing based on solunar theory.
 
