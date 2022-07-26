@@ -76,7 +76,7 @@ namespace SolunarFishing
             Utilities.GetCorrectDataInput(InputType.ForecastTypeInput, inputValue);
 
             ForecastType = inputValue;
-            Console.WriteLine("Thank you. Please wait while we create your fishing forecast for xx day(s).");
+            Console.WriteLine("Thank you. Please wait while we create your fishing forecast for {0} day(s).", inputValue);
             Console.WriteLine();
             AnsiConsole.Write(rule);
             Utilities.centerText("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
